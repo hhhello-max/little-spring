@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<beans>
+    <bean id="bookService" class="com.framework.test.pointcutTest.BookService">
+        <property name="overview" value="看起来很好"/>
+    </bean>
+
+    <bean class="com.framework.aop.proxy.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+
+    <bean id="beforeAdvice" class="com.framework.test.pointcutTest.BookServiceBeforeAdvice"/>
+    <bean id="afterAdvice" class="com.framework.test.pointcutTest.BookServiceAfterAdvice"/>
+
+    <!--<bean id="methodInterceptor" class="com.framework.aop.proxy.adapter.MethodBeforeAdviceInterceptor">
+        <property name="advice" ref="beforeAdvice"/>
+    </bean>-->
+    <bean id="methodInterceptor" class="com.framework.aop.proxy.adapter.MethodAfterReturningAdviceInterceptor">
+        <property name="beforeAdvice" ref="beforeAdvice"/>
+        <property name="afterAdvice" ref="afterAdvice"/>
+    </bean>
+
+    <bean id="pointcutAdvisor" class="com.framework.aop.aspectj.AspectJExpressionPointcutAdvisor">
+        <property name="expression" value="execution(* com.framework.test.pointcutTest.IBookService.*(..))"/>
+        <property name="advice" ref="methodInterceptor"/>
+    </bean>
+
+</beans>

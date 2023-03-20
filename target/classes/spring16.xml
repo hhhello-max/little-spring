@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	         http://www.springframework.org/schema/beans/spring-beans.xsd"
+       xmlns:context="http://www.springframework.org/schema/context">
+
+    <bean id="husband" class="com.framework.test.circulation.Husband">
+        <property name="wife" ref="wife"/>
+    </bean>
+
+    <bean id="husbandMother" class="com.framework.test.circulation.HusbandMother"/>
+
+    <bean id="wife" class="com.framework.test.circulation.Wife">
+        <property name="husband" ref="husband"/>
+        <property name="mother" ref="husbandMother"/>
+    </bean>
+
+    <bean class="com.framework.aop.proxy.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+
+    <bean id="beforeAdvice" class="com.framework.test.circulation.SpouseAdvice"/>
+
+    <bean id="methodInterceptor" class="com.framework.aop.proxy.adapter.MethodBeforeAdviceInterceptor">
+        <property name="advice" ref="beforeAdvice"/>
+    </bean>
+
+    <bean id="pointAdvisor" class="com.framework.aop.aspectj.AspectJExpressionPointcutAdvisor">
+        <property name="expression" value="execution(* com.framework.test.circulation.Wife.*(..))"/>
+        <property name="advice" ref="methodInterceptor"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<beans>
+    <bean id="man" class="com.framework.test.bean.Man">
+        <property name="name" value="jerry" />
+        <property name="age" value="18" />
+        <property name="sex" value="male" />
+    </bean>
+
+    <bean id="userDao" class="com.framework.test.bean.UserDao"
+          init-method="initDataMethod" destroy-method="destroyDataMethod"/>
+
+    <bean id="userService" class="com.framework.test.bean.UserService">
+        <property name="uId" value="10001"/>
+        <property name="company" value="腾讯"/>
+        <property name="location" value="深圳"/>
+        <property name="userDao" ref="userDao"/>
+        <property name="userDao2" ref="proxyUserDao"/>
+    </bean>
+
+    <bean id="proxyUserDao" class="com.framework.test.bean.ProxyBeanFactory"/>
+
+    <bean class="com.framework.test.common.MyBeanPostProcessor"/>
+    <bean class="com.framework.test.common.MyBeanFactoryPostProcessor"/>
+
+    <bean class="com.framework.test.event.ContextRefreshedEventListener"/>
+    <bean class="com.framework.test.event.CustomEventListener"/>
+    <bean class="com.framework.test.event.CustomEventListener2"/>
+    <bean class="com.framework.test.event.ContextClosedEventListener"/>
+
+</beans>
