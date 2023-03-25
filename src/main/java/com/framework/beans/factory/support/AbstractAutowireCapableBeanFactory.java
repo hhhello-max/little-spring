@@ -135,14 +135,14 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
                 if (value instanceof BeanReference){
                     BeanReference beanReference = (BeanReference) value;
                     value = getBean(beanReference.getBeanName());
-                }else {
+                }/*else {
                     Class<?> sourceType = value.getClass();
                     Class<?> targetType = (Class<?>) TypeUtil.getFieldType(bean.getClass(), name);
                     ConversionService conversionService = getConversionService();
                     if (conversionService != null && conversionService.canConvert(sourceType, targetType)){
                         value = conversionService.convert(value, targetType);
                     }
-                }
+                }*/
 
                 BeanUtil.setFieldValue(bean, name, value);
             }
